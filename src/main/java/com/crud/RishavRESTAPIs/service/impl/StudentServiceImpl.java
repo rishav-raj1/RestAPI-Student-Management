@@ -1,5 +1,6 @@
 package com.crud.RishavRESTAPIs.service.impl;
 
+import com.crud.RishavRESTAPIs.dto.AddStudentRequestDto;
 import com.crud.RishavRESTAPIs.dto.StudentDto;
 import com.crud.RishavRESTAPIs.entity.Student;
 import com.crud.RishavRESTAPIs.repository.StudentRepository;
@@ -32,6 +33,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto getStudentById(Long id) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Student not found with this ID: "+id));
+        return modelMapper.map(student, StudentDto.class);
+    }
+
+    @Override
+    public StudentDto createdNewStudent(AddStudentRequestDto addStudentRequestDto) {
+        Student newStudent = modelMapper.map(addStudentRequestDto, Student.class);
+        Student student = studentRepository.save(newStudent);
         return modelMapper.map(student, StudentDto.class);
     }
 }

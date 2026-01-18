@@ -1,10 +1,11 @@
 package com.crud.RishavRESTAPIs.controller;
 
+import com.crud.RishavRESTAPIs.dto.AddStudentRequestDto;
 import com.crud.RishavRESTAPIs.dto.StudentDto;
 import com.crud.RishavRESTAPIs.service.StudentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,13 +19,21 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<StudentDto> getAllStudents(){
-        return studentService.getAllStudents();
+    public ResponseEntity<List<StudentDto>> getAllStudents(){
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @GetMapping("/students/{id}")
-    public StudentDto getStudentById(@PathVariable Long id) {
-        return studentService.getStudentById(id);
+    public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.getStudentById(id));
     }
+
+    @PostMapping("/students")
+    public ResponseEntity<StudentDto>createNewStudent(@RequestBody AddStudentRequestDto addStudentRequestDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createdNewStudent(addStudentRequestDto));
+
+    }
+
+
 
 }
