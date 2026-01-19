@@ -5,6 +5,7 @@ import com.crud.RishavRESTAPIs.dto.StudentDto;
 import com.crud.RishavRESTAPIs.service.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,13 @@ public class StudentController {
         studentService.deleteStudentById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/students/{id}")
+    public ResponseEntity<StudentDto> updateStudent(@PathVariable Long id,
+                                                    @RequestBody AddStudentRequestDto addStudentRequestDto){
+        return ResponseEntity.ok(studentService.updateStudent(id, addStudentRequestDto));
+    }
+
 
 
 }
